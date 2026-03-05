@@ -643,7 +643,28 @@
 
             const generateReport = () => {
                 const avaliadorName = currentUser?.role === 'user' ? currentUser.name : "Alex Sander";
-                return `*RELATÓRIO DE PERFORMANCE FUNCIONAL (SPPB)*\n--------------------------------------------\nData: ${new Date().toLocaleDateString('pt-BR')}\nPaciente: ${patient.name || "Não informado"}\nIdade: ${patient.age ? patient.age + " anos" : "Não informada"}\nAvaliador: ${avaliadorName}\n\n*RESULTADOS POR TESTE:*\n- Equilíbrio Estático: ${balanceTotal}/4\n- Velocidade de Marcha (${gaitData.distance}m): ${gaitScore}/4\n- Força de MMII (Cadeira): ${chairScore}/4\n\n*ESCORE TOTAL SPPB: ${totalScore}/12*\n\n*PARECER CLÍNICO:*\n${getInterpretation(totalScore)}\n\n_Relatório gerado via Alex Sander Fisio SPPB Digital_`;
+                const date = new Date().toLocaleDateString('pt-BR');
+                return `*RELATÓRIO DE PERFORMANCE FUNCIONAL (SPPB)*
+--------------------------------------------
+Data: ${date}
+Paciente: ${patient.name || "Não informado"}
+Idade: ${patient.age ? patient.age + " anos" : "Não informada"}
+Avaliador(a): ${avaliadorName} - Fisioterapia
+
+*RESULTADOS POR TESTE:*
+- Equilíbrio Estático: ${balanceTotal}/4
+- Velocidade de Marcha (${gaitData.distance}m): ${gaitScore}/4
+- Força de MMII (Cadeira): ${chairScore}/4
+
+*ESCORE TOTAL SPPB: ${totalScore}/12*
+
+*PARECER CLÍNICO:*
+${getInterpretation(totalScore)}
+
+*CONSIDERAÇÕES:*
+O protocolo SPPB é um preditor validado de fragilidade. Os dados sugerem necessidade de ${totalScore < 7 ? "reabilitação motora focada em força e equilíbrio" : "manutenção preventiva de mobilidade"}.
+
+_Laudo digital gerado via Plataforma Alex Sander Fisio_`;
             };
 
             const sendWhatsApp = () => {
