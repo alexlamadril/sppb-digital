@@ -313,12 +313,13 @@
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
 
-            const videoSrc = customVideoUrl || "https://storage.googleapis.com/gtv-videos-bucket/sample/./Highconversion_premium_medical_technology_commerci_f42092062c.mp4";
+            // O VÍDEO OFICIAL AGORA ESTÁ FIXADO
+            const videoSrc = customVideoUrl || "./Highconversion_premium_medical_technology_commerci_f42092062c.mp4";
 
             return (
                 <div className="bg-slate-50">
-                    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white/80 backdrop-blur-2xl border-b border-slate-200/50 py-3 shadow-sm' : 'bg-transparent py-5'}`}>
-                        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled || isMenuOpen ? 'bg-white/95 backdrop-blur-2xl border-b border-slate-200/50 py-3 shadow-sm' : 'bg-transparent py-5'}`}>
+                        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between relative z-20">
                             <div className="flex flex-col items-center">
                                 <span className="text-2xl font-black text-slate-950 tracking-tighter leading-none">ALEX SANDER <span className="text-indigo-600">FISIO</span></span>
                                 <span className="text-[9px] font-black text-indigo-500 uppercase tracking-[0.4em] mt-1">Tecnologia Clínica</span>
@@ -328,7 +329,20 @@
                                 <a href="#planos" className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-indigo-600 transition-colors">Assinaturas</a>
                                 <button onClick={onAccessSystem} className="bg-slate-950 text-white px-8 py-3.5 rounded-full font-black text-xs uppercase tracking-widest hover:bg-indigo-600 hover:shadow-[0_0_30px_rgba(79,70,229,0.3)] transition-all">Acesso Restrito</button>
                             </div>
-                            <button className="md:hidden text-slate-950" onClick={() => setIsMenuOpen(!isMenuOpen)}><Icon name={isMenuOpen ? "x" : "menu"} size={28} /></button>
+                            <button className="md:hidden text-slate-950 p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                                <Icon name={isMenuOpen ? "x" : "menu"} size={28} />
+                            </button>
+                        </div>
+
+                        {/* --- MENU MOBILE GAVETA --- */}
+                        <div className={`md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-2xl border-b border-slate-100 shadow-2xl transition-all duration-300 origin-top overflow-hidden ${isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}>
+                            <div className="flex flex-col p-6 gap-6 items-center">
+                                <a href="#solucao" onClick={() => setIsMenuOpen(false)} className="text-sm font-black uppercase tracking-[0.2em] text-slate-600 hover:text-indigo-600 transition-colors py-2">A Solução</a>
+                                <a href="#planos" onClick={() => setIsMenuOpen(false)} className="text-sm font-black uppercase tracking-[0.2em] text-slate-600 hover:text-indigo-600 transition-colors py-2">Assinaturas</a>
+                                <button onClick={() => { setIsMenuOpen(false); onAccessSystem(); }} className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-200 mt-2">
+                                    Acesso Restrito
+                                </button>
+                            </div>
                         </div>
                     </nav>
 
@@ -810,5 +824,4 @@
         root.render(<PlataformaIntegradora />);
     </script>
 </body>
-
 </html>
